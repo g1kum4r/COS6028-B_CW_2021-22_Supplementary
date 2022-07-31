@@ -5,39 +5,31 @@
 package mfaapplication.db.dao.impl;
 
 import mfaapplication.model.User;
-import org.junit.After;
-import org.junit.AfterClass;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 /**
  *
  * @author jeeva
  */
-public class UserDaoJdbcImplIT {
+@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
+public class UserDaoJdbcImplTest {
     
-    public UserDaoJdbcImplIT() {
-    }
+    private static String userName;
+    private static String password;
+    
     
     @BeforeClass
     public static void setUpClass() {
+        userName = RandomStringUtils.randomAlphanumeric(12).concat("_test");
+        password = RandomStringUtils.randomAlphanumeric(12);
     }
-    
-    @AfterClass
-    public static void tearDownClass() {
         
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of login method, of class UserDaoJdbcImpl.
      */
@@ -46,27 +38,23 @@ public class UserDaoJdbcImplIT {
      * Test of register method, of class UserDaoJdbcImpl.
      */
     @Test
-    public void testRegister() {
+    public void test01_testRegister() {
         System.out.println("register");
-        User user = new User("user1", "user1");
+        User user = new User(userName, password);
         UserDaoJdbcImpl instance = new UserDaoJdbcImpl();
-        User expResult = new User("user1", "user1");
         User result = instance.register(user);
-        assertEquals(expResult.getUsername(), result.getUsername());
-        assertEquals(expResult.getPassword(), result.getPassword());
+        assertEquals(userName, result.getUsername());
+        assertEquals(password, result.getPassword());
         assertNotNull(result.getId());
         assertTrue(result.getId() > 0);
     }
     
     @Test
-    public void testLogin() {
+    public void test02_testLogin() {
         System.out.println("login");
-        String username = "user1";
-        String password = "user1";
         UserDaoJdbcImpl instance = new UserDaoJdbcImpl();
-        User expResult = new User("user1", "user1");;
-        User result = instance.login(username, password);
-        assertEquals(expResult.getUsername(), result.getUsername());
-        assertEquals(expResult.getPassword(), result.getPassword());
+        User result = instance.login(userName, password);
+        assertEquals(userName, result.getUsername());
+        assertEquals(password, result.getPassword());
     }
 }
