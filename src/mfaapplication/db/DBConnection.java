@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-import mfaapplication.method.impl.MFAuthenticationPhoneMethod;
 
 /**
  *
@@ -24,7 +23,6 @@ public class DBConnection {
     private static final Logger LOGGER = Logger.getLogger(DBConnection.class.getName());
     
     public static Connection getConnection() throws SQLException, ClassNotFoundException{
-        System.getenv().forEach(e -> LOGGER.info(e));
         if(connection == null || connection.isClosed()){
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
